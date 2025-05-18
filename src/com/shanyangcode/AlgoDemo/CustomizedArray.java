@@ -106,6 +106,20 @@ public class CustomizedArray {
         // 1 2 3 0 0 0
     }
 
+    private void expandCapacityHand() {
+        // 创建一个新的数组，容量是原来的两倍
+        int[] newArray = new int[array.length * 2];
+
+        // 将原数组中的元素逐个复制到新数组中
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+
+        // 将原数组引用指向新数组
+        array = newArray;
+    }
+
+
     // 打印函数
     @Override
     public String toString() {

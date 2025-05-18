@@ -120,6 +120,55 @@ public class BinarySearchTest {
         return -1;
     }
 
+    public int findTargetInRotatedArrayForMe(int[] nums, int target) {
+        // 特判
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        // 初始化搜索区间的左右边界
+        int left = 0, right = nums.length - 1;
+
+        // 当搜索区间有效时（即左边界不超过右边界）
+        while (left <= right) {
+            // 计算中间位置，避免溢出写法
+            int mid = left + (right - left) / 2;
+
+            // 如果中间值就是目标值，直接返回下标
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // 判断左半部分是否是有序的（注意：等号确保 nums[mid]==nums[left] 时也判为有序）
+            if (nums[left] <= nums[mid]) {
+                // 如果目标值在左半部分的范围内（包括左边界，不包括中间）
+                // 也就是所说的旋转区
+                if (nums[left] <= target && target < nums[mid]) {
+                    // 缩小搜索区间到左半部分
+                    right = mid - 1;
+                } else {
+                    // 否则目标值一定不在左半部分，搜索右半部分
+                    left = mid + 1;
+                }
+            }
+            // 否则右半部分一定是有序的
+            else {
+                // 如果目标值在右半部分的范围内（不包括中间，包括右边界）
+                if (nums[mid] < target && target <= nums[right]) {
+                    // 缩小搜索区间到右半部分
+                    left = mid + 1;
+                } else {
+                    // 否则目标值一定不在右半部分，搜索左半部分
+                    right = mid - 1;
+                }
+            }
+        }
+
+        // 如果循环结束都没有找到，说明目标值不存在，返回 -1
+        return -1;
+    }
+
+
     public static void main(String[] args) {
         System.out.println("Hello Binary Search");
         BinarySearchTest test = new BinarySearchTest();

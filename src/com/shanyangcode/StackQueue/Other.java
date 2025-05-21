@@ -84,6 +84,26 @@ public class Other {
         return stack.isEmpty();
     }
 
+    /**
+     * 给定一个非负整数组，对于每个元素，找出它右边第一个比它大的元素。若没有最大的元素返回 -1.
+     */
+    public int[] nextGreaterValue(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return nums;
+        }
+        Deque<Integer> stack = new LinkedList<>();
+        int n = nums.length;
+        int[] result = new int[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = -1;
+            while (!stack.isEmpty() && nums[stack.peekLast()] < nums[i]) {
+                result[stack.pollLast()] = nums[i];
+            }
+            stack.offerLast(i);
+        }
+        return result;
+    }
+
 
     public static void main(String[] args) {
 
